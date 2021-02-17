@@ -30,10 +30,7 @@ function MenuComponent(props) {
             </div>           
             
         </div>
-
-        
-
-        
+       
 
         </>
     )
