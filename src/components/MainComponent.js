@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import MenuComponent from "./MenuComponent"
 import DishdetailComponent from './DishdetailComponent'
+import HeaderComponent from './HeaderComponent'
+import FooterComponent from './FooterComponent'
 import {DISHES} from '../shared/dishes'
 
 function MainComponent() {
@@ -14,17 +16,15 @@ function MainComponent() {
     return (
         <div>
             
-            <nav className='navbar p-2 navbar-dark bg-primary justify-content-center'>
-            <ul className='navbar-nav' style={{color:'white'}}>
-            <li className='nav-item'>NAVIGATION BAR</li>
-            </ul>
-            </nav>
+           <HeaderComponent/> 
         
      
         <MenuComponent dishes={DISHES} 
             onClick={(dishId)=>setSelectedDish(dishId)}/>
         <DishdetailComponent dish={dishes.filter((dish)=>dish.id===selectedDish)[0]}/>
             
+
+            <FooterComponent/>
         </div>
     )
 }
