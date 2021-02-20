@@ -1,15 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
 import MainComponent from './components/MainComponent'
 
 
 function App() {
   return (
-    <div className="App">
-      
-      <MainComponent/>
+    <BrowserRouter>
+      <div className="App">
 
-    </div>
+        <MainComponent />
+
+      </div>
+    </BrowserRouter>
   );
 }
 
