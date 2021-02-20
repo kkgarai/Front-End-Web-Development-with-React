@@ -1,32 +1,42 @@
 import React from 'react'
+import {
+    Card, CardImg, CardText, CardBody,
+    CardTitle, Breadcrumb, BreadcrumbItem
+} from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 function DishdetailComponent(props) {
-    const selectedDish = props.dish;
 
 
 
-    const renderComments = (comments) => {
+
+    const RenderComments = ({ comments }) => {
         if (comments == 0)
             return (
                 <div></div>
             )
         else
             return (
-                comments.map((comment) => {
-                    return (
-                        <div>
-                            <h4>COMMENTS</h4>
-                            <li className="list-unstyled" key={comment.id}>{comment.comment}</li>
-                            <li className="list-unstyled">
-                                {comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
-                            </li>
-                        </div>
-                    )
-                })
+                <div className='container  p-1 mt-5 ml-0 col-md-5 col-xs-12' >
+                    <h4>COMMENTS</h4>
+                    {
+                        comments.map((comment) => {
+                            return (
+                                <div>
+
+                                    <li className="list-unstyled" key={comment.id}>{comment.comment}</li>
+                                    <li className="list-unstyled">
+                                        {comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
+                                    </li>
+                                </div>
+                            )
+                        })
+                    }
+                </div >
             )
     }
 
-    const renderDish = (selectedDish) => {
+    const RenderDish = ({ selectedDish }) => {
         if (selectedDish == null)
             return (<></>)
         else
@@ -45,9 +55,7 @@ function DishdetailComponent(props) {
                         </div>
 
                     </div>
-                    <div className='container  p-1 mt-5 ml-0 col-md-5 col-xs-12' >
-                        {renderComments(selectedDish.comments)}
-                    </div>
+
                 </>
 
 
@@ -56,14 +64,27 @@ function DishdetailComponent(props) {
 
 
     return (
-        <div className='row'>
+        <div className="container">
+            <div className="row">
+                <Breadcrumb>
+
+                    <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{props.selectedDish.name}</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{props.selectedDish.name}</h3>
+                    <hr />
+                </div>
+            </div>
+            <div className='row'>
+
+
+                <RenderDish selectedDish={props.selectedDish} />
+                <RenderComments comments={props.comments} />
 
 
 
-            {renderDish(selectedDish)}
-
-
-
+            </div>
         </div>
     )
 }
