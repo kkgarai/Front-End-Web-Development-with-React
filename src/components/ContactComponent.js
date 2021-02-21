@@ -1,8 +1,26 @@
-import React from 'react';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function Contact(props) {
+    const [firstname, setFirstname] = useState('')
+    const [lastname, setLastname] = useState('')
+    const [telnum, setTelnum] = useState('')
+    const [email, setEmail] = useState('')
+    const [agree, setAgree] = useState(false)
+    const [contactType, setContactType] = useState('Tel.')
+    const [message, setMessage] = useState('')
+
+
+
+    const handleSubmit = (event) => {
+        console.log("Submit")
+        event.preventDefault()
+    }
+
+
+
+
     return (
         <div className="container">
             <div className="row">
@@ -40,6 +58,91 @@ function Contact(props) {
                         <a role="button" className="btn btn-success" href="mailto:confusion@food.net"><i className="fa fa-envelope-o"></i> Email</a>
                     </div>
                 </div>
+            </div>
+            <div className='row row-content'>
+                <div className="col-12">
+                    <h3>Send us your feedback</h3>
+                </div>
+                <div className="col-12 col-md-9">
+                    <Form onSubmit={handleSubmit}>
+                        <FormGroup row>
+                            <Label htmlFor="firstname" md={2}>First Name</Label>
+                            <Col md={10}>
+                                <Input type='text' id='firstname' name='firstname'
+                                    placeholder="First Name" value={firstname}
+                                    onChange={(event) => setFirstname(event.target.value)} />
+                            </Col>
+                        </FormGroup>
+
+                        <FormGroup row>
+                            <Label htmlFor="lastname" md={2}>Last Name</Label>
+                            <Col md={10}>
+                                <Input type='text' id='lastname' name='lastname'
+                                    placeholder="Last Name" value={lastname}
+                                    onChange={(event) => setLastname(event.target.value)} />
+                            </Col>
+                        </FormGroup>
+
+                        <FormGroup row>
+                            <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
+                            <Col md={10}>
+                                <Input type="tel" id="telnum" name="telnum"
+                                    placeholder="Tel. number"
+                                    value={telnum}
+                                    onChange={(event) => setTelnum(event.target.value)} />
+                            </Col>
+                        </FormGroup>
+
+                        <FormGroup row>
+                            <Label htmlFor="email" md={2}>Email</Label>
+                            <Col md={10}>
+                                <Input type="email" id="email" name="email"
+                                    placeholder="Email"
+                                    value={email}
+                                    onChange={(event) => setEmail(event.target.value)} />
+                            </Col>
+                        </FormGroup>
+
+                        <FormGroup row>
+                            <Col md={{ size: 6, offset: 2 }}>
+                                <FormGroup check>
+                                    <Label check>
+                                        <Input type="checkbox"
+                                            name="agree"
+                                            checked={agree}
+                                            onChange={(event) => setAgree(event.target.checked)} /> {' '}
+                                        <strong>May we contact you?</strong>
+                                    </Label>
+                                </FormGroup>
+                            </Col>
+                            <Col md={{ size: 3, offset: 1 }}>
+                                <Input type="select" name="contactType"
+                                    value={contactType}
+                                    onChange={(event) => setContactType(event.target.value)}>
+                                    <option>Tel.</option>
+                                    <option>Email</option>
+                                </Input>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label htmlFor="message" md={2}>Your Feedback</Label>
+                            <Col md={10}>
+                                <Input type="textarea" id="message" name="message"
+                                    rows="12"
+                                    value={message}
+                                    onChange={(event) => setMessage(event.target.value)}></Input>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Col md={{ size: 10, offset: 2 }}>
+                                <Button type="submit" color="primary">
+                                    Send Feedback
+                                    </Button>
+                            </Col>
+                        </FormGroup>
+                    </Form>
+                </div>
+
             </div>
         </div>
     );
