@@ -22,13 +22,16 @@ function DishdetailComponent(props) {
         setIsModalOpen(!isModelOpen)
     }
 
-    const handleSubmit = (values) => {
-        console.log("Current State is " + JSON.stringify(values))
-        alert("Current State is " + JSON.stringify(values))
-        toggleModal()
-    }
 
-    const CommentForm = () => {
+    const CommentForm = (props) => {
+        const handleSubmit = (values) => {
+            console.log("Current State is " + JSON.stringify(values))
+            alert("Current State is " + JSON.stringify(values))
+            props.addComment(props.dishId, values.rating, values.author, values.comment)
+            toggleModal()
+        }
+
+
         return (
             <Modal isOpen={isModelOpen} toggle={toggleModal}>
                 <ModalHeader toggle={toggleModal}>Submit Comment</ModalHeader>
@@ -51,7 +54,7 @@ function DishdetailComponent(props) {
                         <Row className='form-group'>
                             <Label htmlFor="name" md={2}>Your Name</Label>
                             <Col md={10}>
-                                <Control.text model=".name" name="name" id="name"
+                                <Control.text model=".author" name="author" id="author"
                                     className='form-control' placeholder="Enter Your Name"
                                     validators={{ required, minLength: minLength(3), maxLength: maxLength(15) }}>
 
@@ -91,7 +94,7 @@ function DishdetailComponent(props) {
         )
     }
 
-    const RenderComments = ({ comments }) => {
+    const RenderComments = ({ comments, addComment, dishId }) => {
         if (comments == 0)
             return (
                 <div></div>
@@ -109,6 +112,7 @@ function DishdetailComponent(props) {
                                     <li className="list-unstyled">
                                         {comment.author},{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
                                     </li>
+                                    <CommentForm dishId={dishId} addComment={addComment} />
                                 </div>
                             )
                         })
@@ -163,11 +167,13 @@ function DishdetailComponent(props) {
                     <RenderDish selectedDish={props.selectedDish} />
                 </div>
                 <div className='col  p-1 mt-5 ml-0 col-md-5  col-sm-12' >
-                    <RenderComments comments={props.comments} />
+                    <RenderComments comments={props.comments}
+                        addComment={props.addComment}
+                        dishId={props.selectedDish.id} />
                     <Button outline className='m-4' onClick={toggleModal}>
                         <span className='fa fa-pencil'>&nbsp;Submit Comment</span>
                     </Button>
-                    <CommentForm />
+
                 </div>
 
 
